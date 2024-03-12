@@ -3,6 +3,8 @@
 Back-end API implementation for github-kanban-test-task
 Developed with using REST standards of creating API.
 
+Server is running onto https://api-kanban-board-task.onrender.com/
+
 # Technologies I've used
 
 Here I've used several technologies on my way to create & deploy simple API server:
@@ -19,12 +21,12 @@ Here I've used several technologies on my way to create & deploy simple API serv
 
 # API instructions
 
-- GET /todos -- returning a whole Todos list (all users, all todos);
-- GET /todos/:userID -- returning all Todos from user with selected ID (integer value, bigger than 0);
-- POST /todos -- creating a new Todo, write down all specified data onto DB and returning a new Todo instance (as well as REST API standards implementation);
-- DELETE /todos/:todoID -- removing a Todo with selected ID;
-- PATCH /todos/:todoID/:status -- changing a status of current Todo. Used every time when Todo is dragged from one column to the next one;
-- PATCH /todos/:todoID -- updating a Todo data using title and description from request params.
+- GET /todos - returning a whole Todos list (all users, all todos);
+- GET /todos/:userID - returning all Todos from user with selected ID (integer value, bigger than 0);
+- POST /todos - creating a new Todo, write down all specified data onto DB and returning a new Todo instance (as well as REST API standards implementation);
+- DELETE /todos/:todoID - removing a Todo with selected ID;
+- PATCH /todos/:todoID/:status - changing a status of current Todo. Used every time when Todo is dragged from one column to the next one;
+- PATCH /todos/:todoID - updating a Todo data using title and description from request params.
 
 # How to use App
 
