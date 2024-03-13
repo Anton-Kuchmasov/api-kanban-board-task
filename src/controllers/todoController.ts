@@ -98,9 +98,9 @@ export const changeStatus = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { todoID, sendStatus } = req.params;
+    const { todoID, status } = req.params;
 
-    const updatedTodo = await updateStatus(sendStatus, todoID);
+    const updatedTodo = await updateStatus(status, todoID);
 
     if (updatedTodo === null) {
       res.sendStatus(400);

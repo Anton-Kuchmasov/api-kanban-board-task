@@ -72,7 +72,6 @@ export const updateStatus = async (
     await Todos.update({ status }, { where: { id } });
     return todoToUpdate.get({ plain: true });
   }
-
   return null;
 };
 
