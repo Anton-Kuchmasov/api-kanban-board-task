@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router } from "express";
 import {
   changeStatus,
   createTodo,
@@ -6,17 +6,17 @@ import {
   getAllUserTodos,
   removeTodo,
   updateOneTodo,
-} from '.././controllers/todoController.js';
+} from ".././controllers/todoController.js";
 
 const router = Router();
 
-router.get('/todos', getAllTodos);
-router.get('/todos/:userID', getAllUserTodos);
+router.get("/todos", getAllTodos);
+router.get("/todos/:userID", getAllUserTodos);
 
-router.post('/todos', createTodo);
-router.delete('/todos/:todoID', removeTodo);
+router.post("/todos", createTodo);
+router.delete("/todos/:todoID", removeTodo);
 
-router.patch('/todos/:todoID/:status', changeStatus);
-router.patch('/todos/:todoID', updateOneTodo);
+router.patch("/todos/:todoID/:status", changeStatus);
+router.patch("/todos/:todoID", updateOneTodo);
 
 export default router;
