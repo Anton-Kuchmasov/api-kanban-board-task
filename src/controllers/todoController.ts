@@ -15,8 +15,7 @@ export const getAllTodos = (req: Request, res: Response): void => {
   findAllTodos()
     .then((todos) => res.json(todos))
     .catch((error) => {
-      console.error(error);
-      res.sendStatus(500);
+      res.status(500).send(error.message);
     });
 };
 
@@ -31,8 +30,7 @@ export const getAllUserTodos = (req: Request, res: Response): void => {
   findAllTodosFromUser(normalizedUsedID)
     .then((todos) => res.json(todos))
     .catch((error) => {
-      console.error(error);
-      res.sendStatus(500);
+      res.status(500).send(error.message);
     });
 };
 
@@ -120,13 +118,10 @@ export const updateTodosIndexes = async (
 ): Promise<void> => {
   try {
     const todos: TodoInstance[] = req.body.todos;
-    console.log(todos);
-
     const updatedTodos: TodoInstance[] = await updateTodosIndex(todos);
 
     res.status(200).json({ updatedTodos });
   } catch (error) {
-    console.error("Error updating todos indexes:", error);
     res.status(500).send("Error updating todos indexes");
   }
 };
