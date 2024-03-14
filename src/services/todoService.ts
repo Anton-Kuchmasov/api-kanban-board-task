@@ -75,6 +75,28 @@ export const updateStatus = async (
   return null;
 };
 
+export const updateTodosIndex = async (
+  todos: TodoInstance[],
+): Promise<TodoInstance[]> => {
+  const updatedTodos: TodoInstance[] = [];
+
+  for (let i = 0; i < todos.length; i++) {
+    const todo = todos[i];
+
+    await Todos.update({ index: i + 1 }, { where: { id: todo.id } });
+
+    const updatedTodo = await Todos.findOne({
+      where: { id: todo.id },
+    });
+
+    if (updatedTodo !== null && updatedTodo !== undefined) {
+      updatedTodos.push(updatedTodo as TodoInstance);
+    }
+  }
+
+  return updatedTodos;
+};
+
 export const deleteTodoById = async (
   todoId: string,
 ): Promise<TodoInstance | null> => {

@@ -6,8 +6,10 @@ import {
   findAllTodosFromUser,
   updateStatus,
   updateTodo,
+  updateTodosIndex,
 } from "../services/todoService.js";
 import { normalizeNumberID } from "../helpers/normalizeNumberID.js";
+import { type TodoInstance } from "../interfaces/todo.js";
 
 export const getAllTodos = (req: Request, res: Response): void => {
   findAllTodos()
@@ -109,6 +111,23 @@ export const changeStatus = async (
     }
   } catch (err) {
     res.sendStatus(500);
+  }
+};
+
+export const updateTodosIndexes = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const todos: TodoInstance[] = req.body.todos;
+    console.log(todos);
+
+    const updatedTodos: TodoInstance[] = await updateTodosIndex(todos);
+
+    res.status(200).json({ updatedTodos });
+  } catch (error) {
+    console.error("Error updating todos indexes:", error);
+    res.status(500).send("Error updating todos indexes");
   }
 };
 

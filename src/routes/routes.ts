@@ -6,11 +6,13 @@ import {
   getAllUserTodos,
   removeTodo,
   updateOneTodo,
+  updateTodosIndexes,
 } from ".././controllers/todoController.js";
 
 const router = Router();
 
 router.get("/todos", getAllTodos);
+router.patch("/todos/update", updateTodosIndexes);
 router.get("/todos/:userID", getAllUserTodos);
 
 router.post("/todos", createTodo);
