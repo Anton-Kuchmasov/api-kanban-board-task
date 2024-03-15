@@ -1,4 +1,5 @@
 import { type Request, type Response } from "express";
+
 import {
   createNewTodo,
   deleteTodoById,
@@ -8,6 +9,7 @@ import {
   updateTodo,
   updateTodosIndex,
 } from "../services/todoService.js";
+
 import { normalizeNumberID } from "../helpers/normalizeNumberID.js";
 import { type TodoInstance } from "../interfaces/todo.js";
 
@@ -27,6 +29,7 @@ export const getAllUserTodos = (req: Request, res: Response): void => {
     res.sendStatus(400);
     return;
   }
+
   findAllTodosFromUser(normalizedUsedID)
     .then((todos) => res.json(todos))
     .catch((error) => {
@@ -72,6 +75,21 @@ export const createTodo = async (
   }
 };
 
+export const removeTodo = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { todoID } = req.params;
+
+    await deleteTodoById(todoID);
+
+    res.sendStatus(204);
+  } catch (err) {
+    res.sendStatus(500);
+  }
+};
+
 export const updateOneTodo = async (
   req: Request,
   res: Response,
@@ -79,8 +97,8 @@ export const updateOneTodo = async (
   try {
     const { title, description }: { title: string; description: string } =
       req.body;
-    const { todoID } = req.params;
 
+    const { todoID } = req.params;
     const updatedTodo = await updateTodo(title, description, todoID);
 
     if (updatedTodo === null) {
@@ -99,7 +117,6 @@ export const changeStatus = async (
 ): Promise<void> => {
   try {
     const { todoID, status } = req.params;
-
     const updatedTodo = await updateStatus(status, todoID);
 
     if (updatedTodo === null) {
@@ -123,20 +140,5 @@ export const updateTodosIndexes = async (
     res.status(200).json({ updatedTodos });
   } catch (error) {
     res.status(500).send("Error updating todos indexes");
-  }
-};
-
-export const removeTodo = async (
-  req: Request,
-  res: Response,
-): Promise<void> => {
-  try {
-    const { todoID } = req.params;
-
-    await deleteTodoById(todoID);
-
-    res.sendStatus(204);
-  } catch (err) {
-    res.sendStatus(500);
   }
 };

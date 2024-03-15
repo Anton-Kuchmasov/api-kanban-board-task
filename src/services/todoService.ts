@@ -42,6 +42,27 @@ export const createNewTodo = async (
   return formattedNewTodo;
 };
 
+export const deleteTodoById = async (
+  todoId: string,
+): Promise<TodoInstance | null> => {
+  const todoToDelete = await Todos.findOne({
+    where: {
+      id: todoId,
+    },
+  });
+
+  if (todoToDelete !== null && todoToDelete !== undefined) {
+    await Todos.destroy({
+      where: {
+        id: todoId,
+      },
+    });
+
+    return todoToDelete.get({ plain: true });
+  }
+  return null;
+};
+
 export const updateTodo = async (
   title: string,
   description: string,
@@ -95,25 +116,4 @@ export const updateTodosIndex = async (
   }
 
   return updatedTodos;
-};
-
-export const deleteTodoById = async (
-  todoId: string,
-): Promise<TodoInstance | null> => {
-  const todoToDelete = await Todos.findOne({
-    where: {
-      id: todoId,
-    },
-  });
-
-  if (todoToDelete !== null && todoToDelete !== undefined) {
-    await Todos.destroy({
-      where: {
-        id: todoId,
-      },
-    });
-
-    return todoToDelete.get({ plain: true });
-  }
-  return null;
 };

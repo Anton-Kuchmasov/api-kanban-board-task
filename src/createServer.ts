@@ -12,7 +12,10 @@ export async function createServer(): Promise<Express> {
   try {
     await sequelize.authenticate();
   } catch (error) {
-    console.error("Unable to connect to the database:", error);
+    app.use((req, res) => {
+      res.status(500).send("Database connection error");
+    });
+
     return app;
   }
 
