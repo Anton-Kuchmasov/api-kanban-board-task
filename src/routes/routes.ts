@@ -1,25 +1,31 @@
 import { Router } from "express";
+
+import { errorHandlerMiddleware } from "./../middlewares/error-handler.js";
+
 import {
-  changeStatus,
-  createTodo,
-  getAllTodos,
-  getAllUserTodos,
-  removeTodo,
-  updateOneTodo,
-  updateTodosIndexes,
-} from ".././controllers/todoController.js";
+  changeTodoStatusController,
+  createTodoController,
+  getAllTodosController,
+  getAllUserTodosController,
+  removeTodoController,
+  updateOneTodoController,
+  updateTodosIndexController,
+} from "../todos/todo-controller.js";
+import { checkRequestBody } from "../middlewares/check-request-body.js";
 
 const router = Router();
 
-router.get("/todos", getAllTodos);
-router.get("/todos/:userID", getAllUserTodos);
+router.get("/todos", getAllTodosController);
+router.get("/todos/:userID", getAllUserTodosController);
 
-router.post("/todos", createTodo);
+router.post("/todos", createTodoController);
 
-router.delete("/todos/:todoID", removeTodo);
+router.delete("/todos/:todoID", removeTodoController);
 
-router.patch("/todos/update", updateTodosIndexes);
-router.patch("/todos/:todoID/:status", changeStatus);
-router.patch("/todos/:todoID", updateOneTodo);
+router.patch("/todos/update", checkRequestBody, updateTodosIndexController);
+router.patch("/todos/:todoID/:status", changeTodoStatusController);
+router.patch("/todos/:todoID", updateOneTodoController);
+
+router.use(errorHandlerMiddleware);
 
 export default router;

@@ -1,6 +1,6 @@
 # API-Kanban-board-task
 
-Back-end API implementation for github-kanban-test-task 
+Back-end API implementation for github-kanban-test-task
 Developed with using REST standards of creating API.
 
 Server is running onto https://api-kanban-board-task.onrender.com/
@@ -21,7 +21,7 @@ Here I've used several technologies on my way to create & deploy simple API serv
 - **ESLint**, **Husky** and **Prettier** on way to improve my own code style;
 - **Nodemon**, **dotenv** libs for simplify development process.
 
-# API instructions & endpoints 
+# API instructions & endpoints
 
 There are 7 different endpoints which used to serve data from DB to front-end App:
 
@@ -33,10 +33,9 @@ There are 7 different endpoints which used to serve data from DB to front-end Ap
 - **PATCH /todos/:todoID** - updating a Todo data using title and description from request params;
 - **PATCH /todos/update** - used to update indexes of ALL todos from selected user. Used to implement a Drag-and-Drop logic on Client.
 
-
 # How to use App
 
-In dev mode: 
+In dev mode:
 
 - **npm start** will run build command & use dist/index.js in Nodemon as well.
 

@@ -1,5 +1,5 @@
 import { type Model } from "sequelize";
-import { type ToDoStatus } from "../helpers/ToDoStatus.js";
+import { type ToDoStatus } from "../types/todo-status.js";
 
 export interface TodoAttributes {
   id: number;

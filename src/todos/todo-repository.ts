@@ -1,12 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 
 import { Todos } from "../db.js";
-import { ToDoStatus } from "../helpers/ToDoStatus.js";
 import { type TodoInstance } from "../interfaces/todo.js";
 
 export const findAllTodos = async (): Promise<TodoInstance[]> => {
   const result = await Todos.findAll();
-
   return result.map((todo) => todo.get({ plain: true }));
 };
 
@@ -27,19 +25,14 @@ export const createNewTodo = async (
   description: string,
   userID: number,
   index: number,
-): Promise<TodoInstance> => {
-  const rawNewTodo = await Todos.create({
+): Promise<void> => {
+  await Todos.create({
     title,
     description,
     id: uuidv4(),
     userID,
     index,
-    status: ToDoStatus.TODO,
   });
-
-  const formattedNewTodo: TodoInstance = rawNewTodo.get({ plain: true });
-
-  return formattedNewTodo;
 };
 
 export const deleteTodoById = async (
@@ -51,34 +44,27 @@ export const deleteTodoById = async (
     },
   });
 
-  if (todoToDelete !== null && todoToDelete !== undefined) {
-    await Todos.destroy({
-      where: {
-        id: todoId,
-      },
-    });
-
-    return todoToDelete.get({ plain: true });
+  if (!todoToDelete) {
+    return null;
   }
-  return null;
+
+  await Todos.destroy({
+    where: {
+      id: todoId,
+    },
+  });
+
+  return todoToDelete.get({ plain: true });
 };
 
-export const updateTodo = async (
-  title: string,
-  description: string,
+export const findTodoById = async (
   id: string,
 ): Promise<TodoInstance | null> => {
-  const todoToUpdate = await Todos.findOne({
+  const foundedTodo = await Todos.findOne({
     where: { id },
   });
 
-  if (todoToUpdate !== null && todoToUpdate !== undefined) {
-    await Todos.update({ title, description }, { where: { id } });
-
-    return todoToUpdate.get({ plain: true });
-  }
-
-  return null;
+  return foundedTodo !== null ? foundedTodo.get({ plain: true }) : null;
 };
 
 export const updateStatus = async (
@@ -89,20 +75,20 @@ export const updateStatus = async (
     where: { id },
   });
 
-  if (todoToUpdate !== null && todoToUpdate !== undefined) {
+  if (todoToUpdate !== null) {
     await Todos.update({ status }, { where: { id } });
     return todoToUpdate.get({ plain: true });
   }
   return null;
 };
 
-export const updateTodosIndex = async (
-  todos: TodoInstance[],
+export const updateIndexes = async (
+  todosToUpdate: TodoInstance[],
 ): Promise<TodoInstance[]> => {
   const updatedTodos: TodoInstance[] = [];
 
-  for (let i = 0; i < todos.length; i++) {
-    const todo = todos[i];
+  for (let i = 0; i < todosToUpdate.length; i++) {
+    const todo = todosToUpdate[i];
 
     await Todos.update({ index: i + 1 }, { where: { id: todo.id } });
 
@@ -110,8 +96,8 @@ export const updateTodosIndex = async (
       where: { id: todo.id },
     });
 
-    if (updatedTodo !== null && updatedTodo !== undefined) {
-      updatedTodos.push(updatedTodo as TodoInstance);
+    if (updatedTodo) {
+      updatedTodos.push(updatedTodo.get({ plain: true }) as TodoInstance);
     }
   }
 

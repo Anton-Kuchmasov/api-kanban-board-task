@@ -1,9 +1,5 @@
-import dotenv from "dotenv";
-import { createServer } from "./createServer.js";
-
-dotenv.config();
-
-const PORT = process.env.PORT ?? 3001;
+import { createServer } from "./create-server.js";
+import PORT from "./config/env-config.js";
 
 async function startServer(): Promise<void> {
   try {

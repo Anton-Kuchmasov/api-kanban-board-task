@@ -8,7 +8,7 @@
     "format": "prettier . --ignore-path .gitignore --write",
     "lint": "eslint src/**/*.ts --fix",
     "fix-style": "npm run format && npm run lint",
-    "build": "npm run lint && npm run format && tsc",
+    "build": "npm run fix-style && tsc",
     "start": "npm run build && nodemon dist/index.js",
     "prepare": "husky install"
   },
@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.18.3",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
@@ -29,7 +30,6 @@
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard-with-typescript": "^43.0.1",
