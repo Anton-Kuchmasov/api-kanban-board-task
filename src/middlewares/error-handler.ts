@@ -6,5 +6,5 @@ export const errorHandlerMiddleware = (
   res: Response,
   next: NextFunction,
 ): void => {
-  res.status(500).send("Internal Server Error: ").send(error.message);
+  res.status(500).send("Internal Server Error: " + error.message);
 };

@@ -22,4 +22,4 @@ if (
   PORT = defaultPort;
 }
 
-export default PORT;
+export default defaultPort;
